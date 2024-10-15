@@ -7,6 +7,7 @@ Fichier test des idées.
 TACHES DE BASE : 
 * Créer une forme
 * Déplacer une forme
+  
 TACHES SECONDAIRES :
 * Supprimer forme
 * Modifier couleur
