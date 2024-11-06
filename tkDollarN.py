@@ -34,7 +34,7 @@ def recognize():
         res = dNr.recognize(drawn_strokes)
         txt = res['name']+' ('+str(res['value'])+')'
         result_txt.configure(text=txt)
-        ivyapi.IvySendMsg("ivyprobe :"+txt)
+        ivyapi.IvySendMsg("dollarN: "+txt)
 
 #_______________________________________________________________________________
 #Tkinter management
