@@ -1,9 +1,6 @@
 import os
-import numpy as np
-import dollarN as dN
 import tkinter as tk
 from tkinter import messagebox
-import time
 from collections import defaultdict
 
 

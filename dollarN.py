@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 # Michael ORTEGA LIG/CNRS - 02/Apr/2021
 
-import math, time
+import math
+import time
 import numpy as np
 
 def vector(a, b):

@@ -1,17 +1,16 @@
 #!/usr/bin/env python
-
-from ivy.std_api import *
+import ivy.std_api as ivyapi
 from typing import Any
 
 def info(fmt: str, *arg: Any) -> None:
     print(fmt % arg)
 
-def on_connection_change(agent: IvyClient, event: int) -> None:
-    if event == IvyApplicationDisconnected:
+def on_connection_change(agent: ivyapi.IvyClient, event: int) -> None:
+    if event == ivyapi.IvyApplicationDisconnected:
         info('Ivy application %r has disconnected', agent)
     else:
         info('Ivy application %r has connected', agent)
-    apps = IvyGetApplicationList()
+    apps = ivyapi.IvyGetApplicationList()
     info(
         'Ivy applications currently on the bus (count: %i): %s',
         len(apps),
@@ -19,8 +18,8 @@ def on_connection_change(agent: IvyClient, event: int) -> None:
     )
 
 
-IvyInit("fusion_engine","hi",0,on_connection_change)
-IvyStart()
+ivyapi.IvyInit("fusion_engine","hi",0,on_connection_change)
+ivyapi.IvyStart()
 forme=""
 
 
@@ -35,9 +34,9 @@ def dollarN_callback(agent, arg):
 
 def sra5_callback(agent, arg):
     print("sra5_callback: agent=%r larg=%r" % (agent, arg))
-    IvySendMsg("dollarN: "+forme)
+    ivyapi.IvySendMsg("dollarN: "+forme)
     
 
-IvyBindMsg(dollarN_callback, "^dollarN: (.*)")
-IvyBindMsg(sra5_callback, "^sra5: (.*)")
-IvyBindMsg(sra5_callback, "(.*)")
+ivyapi.IvyBindMsg(dollarN_callback, "^dollarN: (.*)")
+ivyapi.IvyBindMsg(sra5_callback, "^sra5: (.*)")
+ivyapi.IvyBindMsg(sra5_callback, "(.*)")

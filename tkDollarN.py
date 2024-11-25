@@ -3,11 +3,9 @@
 # Michael ORTEGA LIG/CNRS - 02/Apr/2021
 
 import os
-import numpy as np
 import dollarN as dN
 import tkinter as tk
 import ivy.std_api as ivyapi
-import ivy.ivy as ivy
 
 #_______________________________________________________________________________
 #Globals
