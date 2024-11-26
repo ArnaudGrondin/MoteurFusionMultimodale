@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE grammar PUBLIC "-//W3C//DTD GRAMMAR 1.0//EN" "grammar.dtd">
+<grammar version="1.0"
+         mode="voice"
+         xmlns="http://www.w3.org/2001/06/grammar"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.w3.org/2001/06/grammar grammar.xsd"
+         xml:lang="fr-FR"
+         root="kebab_order"
+         tag-format="semantics/1.0">
+    <rule id="kebab_order"
+          scope="public">
+        <one-of>
+            <item>
+                <ruleref special="GARBAGE" />
+            </item>
+            <item> je voudrais </item>
+        </one-of>
+        <one-of>
+            <item>
+                <ruleref special="GARBAGE" />
+            </item>
+            <item>
+                <ruleref uri="#sandwich_type" />
+                <tag>out.sandwich = rules.sandwich_type;</tag>
+            </item>
+        </one-of>
+        <one-of>
+            <item>
+                <ruleref special="GARBAGE" />
+            </item>
+            <item>
+                <ruleref uri="#meat_choice" />
+                <tag>out.meat = rules.meat_choice;</tag>
+            </item>
+        </one-of>
+        <one-of>
+            <item>
+                <ruleref special="GARBAGE" />
+            </item>
+            <item>
+                <ruleref uri="#toppings" />
+                <tag>out.toppings = rules.toppings;</tag>
+            </item>
+        </one-of>
+        <one-of>
+            <item>
+                <ruleref special="GARBAGE" />
+            </item>
+            <item>
+                <ruleref uri="#sauce" />
+                <tag>out.sauce = rules.sauce;</tag>
+            </item>
+        </one-of>
+        <one-of>
+            <item>
+                <ruleref special="GARBAGE" />
+            </item>
+            <item>
+                <ruleref uri="#drink" />
+                <tag>out.drink = rules.drink;</tag>
+            </item>
+        </one-of>
+        <tag>            
+            out= "sandwich=" + out.sandwich + " viande=" + out.meat + " garnitures=" + out.toppings +
+            "sauce=" + out.sauce + " boisson=" + out.drink;
+        </tag>
+    </rule>
+    <rule id="sandwich_type">
+        <one-of>
+            <item>pita<tag>out="PITA";</tag>
+        </item>
+        <item>galette<tag>out="GALETTE";</tag>
+    </item>
+    <item>tacos<tag>out="TACOS";</tag>
+</item>
+</one-of>
+</rule>
+<rule id="meat_choice">
+    <item repeat="1-3">
+        <ruleref uri="#meat" />
+        <tag>out+=rules.meat + " ";</tag>
+    </item>
+</rule>
+<rule id="meat">
+    <one-of>
+        <item>agneau<tag>out="KEBAB";</tag>
+    </item>
+    <item>poulet<tag>out="POULET";</tag>
+</item>
+<item>boeuf<tag>out="BOEUF";</tag>
+</item>
+<item>mixte<tag>out="TENDERS";</tag>
+</item>
+</one-of>
+</rule>
+<rule id="toppings">
+    <item repeat="0-1"> avec <one-of>
+        <item>tout<tag>out+="TOUT ";</tag>
+    </item>
+    <item>
+        <ruleref uri="#topping" />
+        <tag>out+=rules.topping + " ";</tag>
+    </item>
+</one-of>
+</item>
+<item repeat="0-1"> sans <ruleref uri="#topping" />
+<tag>out+="SANS_" + rules.topping + " ";</tag>
+</item>
+</rule>
+<rule id="topping">
+    <one-of>
+        <item>salade<tag>out="SALADE";</tag>
+    </item>
+    <item>tomates<tag>out="TOMATES";</tag>
+</item>
+<item>oignons<tag>out="OIGNONS";</tag>
+</item>
+<item>frites<tag>out="FRITES";</tag>
+</item>
+</one-of>
+</rule>
+<rule id="sauce">
+    <one-of>
+        <item>blanche<tag>out="BLANCHE";</tag>
+    </item>
+    <item>harissa<tag>out="HARISSA";</tag>
+</item>
+<item>ketchup<tag>out="KETCHUP";</tag>
+</item>
+<item>andalouse<tag>out="ANDALOUSE";</tag>
+</item>
+<item>algérienne<tag>out="AU_POIVRE";</tag>
+</item>
+</one-of>
+</rule>
+<rule id="drink">
+    <one-of>
+        <item>coca<tag>out="COCA";</tag>
+    </item>
+    <item>fanta<tag>out="FANTA";</tag>
+</item>
+<item>sprite<tag>out="SPRITE";</tag>
+</item>
+<item>eau<tag>out="EAU";</tag>
+</item>
+</one-of>
+</rule>
+</grammar>
