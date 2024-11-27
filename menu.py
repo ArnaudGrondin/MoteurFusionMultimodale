@@ -1,7 +1,7 @@
 import tkinter as tk
 import subprocess
 import sys
-import os
+
 
 def run_script(script_name):
     try:

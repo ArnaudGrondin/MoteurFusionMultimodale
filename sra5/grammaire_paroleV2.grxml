@@ -6,8 +6,7 @@
           mode ="voice"
           xmlns="http://www.w3.org/2001/06/grammar"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.w3.org/2001/06/grammar
-                              grammar.xsd"
+          xsi:schemaLocation="http://www.w3.org/2001/06/grammar grammar.xsd"
           xml:lang="fr-FR" root="Speech_Recognition" tag-format="semantics/1.0">
 
 	<rule id="Speech_Recognition" scope="public">
