@@ -11,9 +11,12 @@ class FusionMotor:
         ivyapi.IvyBindMsg(self.sra5_callback, "^sra5 (.*)")
         self.forme = ""
         self.sra5_string = ""
-        self.sra5_token = []
+        self.sra5_token: list = []
         self.pos = None
-        self.state = 0
+        self.state = "init"
+        
+        self.state_machine(self.state, "")
+        
         
         self.pos =(122,221)
 
@@ -32,27 +35,34 @@ class FusionMotor:
             ",".join(apps),
         )
 
-    def dollarN_callback(self, agent, arg) -> str:
+    def dollarN_callback(self, agent, arg) -> None:
         self.forme = str(arg)
         print("dollarN_callback: agent=%r arg=%r" % (agent, arg))
+        if self.state == "pos":
+            self.state_machine("dollarN", arg)
 
     def sra5_callback(self, agent, arg):
         # print("sra5_callback: agent=%r arg=%r" % (agent, arg))
-        ivyapi.IvySendMsg("dollarN: " + self.forme)
         self.sra5_processing(arg)
 
-    def sra5_processing(self, sra5_string) -> str:
+    def sra5_processing(self, sra5_string) -> None:
         self.sra5_token = sra5_string.split(" ")
         self.sra5_token[0] = self.sra5_token[0].replace("Parsed=", "")
-        print(self.sra5_token)
+        if len(self.sra5_token) > 3:
+            self.sra5_dict = {item.split('=')[0]: item.split('=')[1] for item in self.sra5_token}
+        print(self.sra5_dict)
+        
 
     def state_machine(self, state, arg) -> None:
         match state:
-            case 0:
+            case "init":
                 if self.pos is not None:
-                    state = 1
-            case 1:
-                ivyapi.IvySendMsg("sra5 " + self.sra5_string)
+                    state = "pos"
+            case "pos":
+                ivyapi.IvySendMsg("motor: " + self.sra5_string)
+            case "dollarN":
+                pass
+                
         
 
 if __name__ == "__main__":
