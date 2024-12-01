@@ -14,8 +14,8 @@ class FusionMotor:
         self.sra5_token: list = []
         self.pos = None
         self.state = "init"
-        
-        self.state_machine(self.state, "")
+        self.sra5_dict: dict = {}
+        # self.state_machine("")
         
         
         self.pos =(122,221)
@@ -39,7 +39,7 @@ class FusionMotor:
         self.forme = str(arg)
         print("dollarN_callback: agent=%r arg=%r" % (agent, arg))
         if self.state == "pos":
-            self.state_machine("dollarN", arg)
+            self.state = "dollarN"
 
     def sra5_callback(self, agent, arg):
         # print("sra5_callback: agent=%r arg=%r" % (agent, arg))
@@ -53,16 +53,17 @@ class FusionMotor:
         print(self.sra5_dict)
         
 
-    def state_machine(self, state, arg) -> None:
-        match state:
-            case "init":
-                if self.pos is not None:
-                    state = "pos"
-            case "pos":
-                ivyapi.IvySendMsg("motor: " + self.sra5_string)
-            case "dollarN":
-                pass
-                
+    def state_machine(self, arg) -> None:
+        while True:
+            match self.state:
+                case "init":
+                    if self.pos is not None:
+                        self.state = "pos"
+                case "pos":
+                    ivyapi.IvySendMsg("motor: " + self.sra5_string)
+                case "dollarN":
+                    pass
+                    
         
 
 if __name__ == "__main__":

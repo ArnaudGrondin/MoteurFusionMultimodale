@@ -13,7 +13,7 @@ dNr              = dN.recognizer()
 m_window        = tk.Tk()
 m_canvas        = None
 result_txt      = None
-drawn_strokes   = []
+drawn_strokes = []
 cb_var_1        = tk.IntVar()
 cb_var_2        = tk.IntVar()
 ivyapi.IvyInit("Ndollar_python")
