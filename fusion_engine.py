@@ -37,7 +37,7 @@ class FusionMotor:
         print("dollarN_callback: agent=%r arg=%r" % (agent, arg))
 
     def sra5_callback(self, agent, arg):
-        # print("sra5_callback: agent=%r arg=%r" % (agent, arg))
+        print("sra5_callback: agent=%r arg=%r" % (agent, arg))
         ivyapi.IvySendMsg("dollarN: " + self.forme)
         self.sra5_processing(arg)
 
