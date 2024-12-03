@@ -75,7 +75,7 @@ class FusionMotor:
         print(self.sra5_dict)
         
 
-    def state_machine(self, arg) -> None:
+    def state_machine(self, arg=None) -> None:
         match self.state:
             case "init":
                 time.sleep(0.2)
@@ -106,7 +106,8 @@ class FusionMotor:
 if __name__ == "__main__":
     motor = FusionMotor()
 
-    
+    while True:
+        motor.state_machine()
     
     
     
