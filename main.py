@@ -32,6 +32,7 @@ def dessiner_forme(fenetre,forme,coord=(210,180), couleur =(255,0,0) ):
         case 'RECTANGLE':
             pygame.draw.rect(fenetre,couleur,rect)
         case 'CIRCLE':
+            pygame.draw.circle(fenetre,(0,255,0),)
             pass
         case 'DIAMOND':
             pass
@@ -49,11 +50,14 @@ def main():
     motor = fusion_engine.FusionMotor()
     font = pygame.font.SysFont(None, 32)
     fenetre.fill("white")
+    
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pass
         action = ""
         if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
             score = float( motor.sra5_dict['Confidence'].replace(',','.'))
@@ -63,8 +67,16 @@ def main():
                 print(f"{motor.sra5_dict}")
                 liste_cmd.append(motor.sra5_dict) # on veut un historique des commandes
                 action = motor.sra5_dict['action']
-                forme = motor.sra5_dict['form']
-                dessiner_forme(fenetre,forme)
+                match action:
+                    case 'CREATE':
+                        dessiner_forme(fenetre,motor.sra5_dict['form'])
+                    case 'MOVE':
+                        pass
+                    case 'DELETE':
+                        pass
+                    case 'QUIT':
+                        pass
+                
             #print("yes " + text )
 
        # print("Token " + str(len(motor.sra5_token)) )
