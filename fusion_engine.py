@@ -11,6 +11,7 @@ class FusionMotor:
         ivyapi.IvyBindMsg(self.dollarN_callback, "^dollarN: (.*)")
         ivyapi.IvyBindMsg(self.sra5_callback, "^sra5 (.*)")
         ivyapi.IvyBindMsg(self.pos_callback, "^pos: (.*)")
+        ivyapi.IvyBindMsg(self.mouse_callback,"^mouse (.*) ")
         self.forme: str = ""
         self.sra5_string: str = ""
         self.sra5_token: list = []
@@ -66,6 +67,8 @@ class FusionMotor:
             self.state = "sra5"
         elif self.state == "dollarN":
             self.state = "color"
+    def mouse_callback(self,agen,arg)-> None:
+        pass
 
     def sra5_processing(self, sra5_string) -> None:
         self.sra5_token = sra5_string.split(" ")

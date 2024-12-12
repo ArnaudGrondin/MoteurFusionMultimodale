@@ -8,7 +8,9 @@ import sys
 import pygame
 from pygame import Rect,Surface
 import os
-   
+import ivy.std_api as ivyapi
+ivyapi.IvyInit("interface")
+ivyapi.IvyStart()
 #os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ''' Interface multimodale'''
 # class interface():
@@ -25,14 +27,17 @@ import os
 #         self.quitButton = tk.Button(self, text='Quit',command=self.quit)            
 #         self.quitButton.grid()    
 
-def dessiner_forme(fenetre,forme,coord=(210,180), couleur =(255,0,0) ):
+# fonction qui dessine les formes a l'écran 
+def dessiner_forme(fenetre,forme,liste_forme,coord=(210,180), couleur =(255,0,0) ):
     rect = Rect(coord,(180,200))
 
     match forme:
         case 'RECTANGLE':
-            pygame.draw.rect(fenetre,couleur,rect)
+            liste_forme.add(pygame.draw.rect(fenetre,couleur,rect))
+            #liste_forme.add(pygame.draw.circle(fenetre,(0,255,0),))
         case 'CIRCLE':
-            pygame.draw.circle(fenetre,(0,255,0),)
+            #pygame.draw.circle(fenetre,(0,255,0),)
+            liste_forme.add(pygame.draw.circle(fenetre,(0,255,0),))
             pass
         case 'DIAMOND':
             pass
@@ -40,6 +45,9 @@ def dessiner_forme(fenetre,forme,coord=(210,180), couleur =(255,0,0) ):
             pass
         case _:
             pass
+def effacer_forme(forme,coord):
+    pass
+    
 
 def main():
     pygame.init()
@@ -50,13 +58,16 @@ def main():
     motor = fusion_engine.FusionMotor()
     font = pygame.font.SysFont(None, 32)
     fenetre.fill("white")
-    
-
+    liste_forme = list()
+    coord_mouse = (0,0)
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
+                coord_mouse = pygame.mouse.get_pos() # A enlever si IVY marche
+                ivyapi.IvySendMsg("mouse: x")
+                
                 pass
         action = ""
         if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
@@ -69,13 +80,14 @@ def main():
                 action = motor.sra5_dict['action']
                 match action:
                     case 'CREATE':
-                        dessiner_forme(fenetre,motor.sra5_dict['form'])
+                        dessiner_forme(fenetre,motor.sra5_dict['form'],liste_forme)
                     case 'MOVE':
                         pass
                     case 'DELETE':
                         pass
                     case 'QUIT':
-                        pass
+                       pass 
+                pygame.display.flip()
                 
             #print("yes " + text )
 
@@ -84,7 +96,7 @@ def main():
         text_surface = font.render(action, True, (255, 255, 255), (0, 0, 0))
         # rend les informations graphiques à l'écran 
         fenetre.blit(text_surface, (20, 20))
-        pygame.display.flip()
+        
         dt = clock.tick(10) / 1000 #limite les fps a 60
         
     # Gestion des événements
