@@ -1,3 +1,6 @@
+# Elio Genson - nov/dec 2024
+# basé sur le code de Michael Ortega
+
 import os
 import tkinter as tk
 from tkinter import messagebox

@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Michael ORTEGA LIG/CNRS - 02/Apr/2021
+# modifié par Elio Genson - nov/dec 2024
 
 import os
 import dollarN as dN
