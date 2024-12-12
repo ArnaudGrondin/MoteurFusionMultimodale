@@ -5,7 +5,9 @@
 import math
 import time
 import numpy as np
-
+import ivy.std_api as ivyapi
+ivyapi.IvyInit("event_souris")
+ivyapi.IvyStart()
 def vector(a, b):
     return [b[0] - a[0], b[1] - a[1]]
 
