@@ -8,9 +8,8 @@ import sys
 import pygame
 from pygame import Rect,Surface
 import os
-import ivy.std_api as ivyapi
-# ivyapi.IvyInit("interface")
-# ivyapi.IvyStart()
+#ivyapi.IvyInit("interface")
+#ivyapi.IvyStart()
 #os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ''' Interface multimodale'''
 # class interface():
@@ -30,7 +29,7 @@ import ivy.std_api as ivyapi
 # fonction qui dessine les formes a l'écran 
 def dessiner_forme(fenetre,forme,liste_forme,coord=(210,180), couleur =(255,0,0) ):
     rect = Rect(coord,(180,200))
-
+    
     match forme:
         case 'RECTANGLE':
             liste_forme.add(pygame.draw.rect(fenetre,couleur,rect))
@@ -42,10 +41,15 @@ def dessiner_forme(fenetre,forme,liste_forme,coord=(210,180), couleur =(255,0,0)
         case 'DIAMOND':
             pass
         case 'TRIANGLE':
+            triangle_points = [coord + (50,0), coord + (-50,-50),coord + (-50,+50)] # coord sommet haut,gauche,droite 
+            liste_forme.add(pygame.draw.polygon(fenetre,couleur,triangle_points))
             pass
         case _:
             pass
 def effacer_forme(forme,coord):
+    #cherchez avec pygame s'il y a une forme aux coordonées spécifiées
+
+    # vérifier que la forme a supprimé correspond à ce qui est dit a l'oral 
     pass
     
 

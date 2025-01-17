@@ -25,3 +25,11 @@ Formule: Créer, Fais, Faire...
 Forme : rectangle, cercle, triangle, losange, carré, parallepipède...
 
 Couleur : rouge, vert, bleu, orange, vert, jaune, noir...
+
+pour lancer l'application dans un terminal  tapez : 
+
+ .\sra5\sra5_on.bat
+
+dans un autre terminal tapez : 
+
+python .\main.py

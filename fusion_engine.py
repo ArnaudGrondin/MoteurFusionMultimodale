@@ -9,8 +9,12 @@ import sys
 
 class FusionMotor:
     def __init__(self) -> None:
-        ivyapi.IvyInit("fusion_engine", "hi", 0, self.on_connection_change)
-        ivyapi.IvyStart()
+        # try:
+        #     ivyapi.IvyStop()
+        # except Exception as e:
+        #     print(f"IvyStop a échoué : {e}")
+        #ivyapi.IvyInit("fusion_engine", "hi", 0, self.on_connection_change)
+        #ivyapi.IvyStart()
         ivyapi.IvyBindMsg(self.dollarN_callback, "^dollarN: (.*)")
         ivyapi.IvyBindMsg(self.sra5_callback, "^sra5 (.*)")
         ivyapi.IvyBindMsg(self.pos_callback, "^pos: (.*)")
@@ -22,7 +26,7 @@ class FusionMotor:
         self.pos = None
         self.state = "init"
         self.sra5_dict: dict = {
-            "action": "undifined",
+            "action": "undefined",
             "where": "undefined",
             "form": "undefined",
             "color": "undefined",
