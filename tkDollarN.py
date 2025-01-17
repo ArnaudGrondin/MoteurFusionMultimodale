@@ -17,7 +17,7 @@ result_txt      = None
 drawn_strokes = []
 cb_var_1        = tk.IntVar()
 cb_var_2        = tk.IntVar()
-ivyapi.IvyInit("Ndollar_python")
+# ivyapi.IvyInit("Ndollar_python")
 ivyapi.IvyStart()
 
 #_______________________________________________________________________________

@@ -9,8 +9,8 @@ import pygame
 from pygame import Rect,Surface
 import os
 import ivy.std_api as ivyapi
-ivyapi.IvyInit("interface")
-ivyapi.IvyStart()
+# ivyapi.IvyInit("interface")
+# ivyapi.IvyStart()
 #os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ''' Interface multimodale'''
 # class interface():
@@ -66,7 +66,7 @@ def main():
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 coord_mouse = pygame.mouse.get_pos() # A enlever si IVY marche
-                ivyapi.IvySendMsg("mouse: x")
+                ivyapi.IvySendMsg("mouse: "+str(coord_mouse))
                 
                 pass
         action = ""
@@ -86,12 +86,12 @@ def main():
                     case 'DELETE':
                         pass
                     case 'QUIT':
-                       pass 
+                        pass 
                 pygame.display.flip()
                 
             #print("yes " + text )
 
-       # print("Token " + str(len(motor.sra5_token)) )
+        # print("Token " + str(len(motor.sra5_token)) )
         #print("String " + motor.sra5_string)
         text_surface = font.render(action, True, (255, 255, 255), (0, 0, 0))
         # rend les informations graphiques à l'écran 
@@ -108,8 +108,8 @@ def main():
     # Fermeture de Pygame
     pygame.quit()
     sys.exit()
-   # app = interface()
-   # app.master.title('Interface multimodale')
+    # app = interface()
+    # app.master.title('Interface multimodale')
     #app.mainloop()
     #
     

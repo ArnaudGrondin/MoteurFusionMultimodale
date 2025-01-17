@@ -4,6 +4,8 @@ import ivy.std_api as ivyapi
 from typing import Any
 import time
 from copy import deepcopy
+import signal
+import sys
 
 class FusionMotor:
     def __init__(self) -> None:
@@ -16,6 +18,7 @@ class FusionMotor:
         self.forme: str = ""
         self.sra5_string: str = ""
         self.sra5_token: list = []
+        self.bool_print = True
         self.pos = None
         self.state = "init"
         self.sra5_dict: dict = {
@@ -30,7 +33,7 @@ class FusionMotor:
         }
         self.output_dict: dict = deepcopy(self.sra5_dict)
         
-        
+        self.running = True
         self.pos =(122,221)
 
     def info(self, fmt: str, *arg: Any) -> None:
@@ -54,12 +57,14 @@ class FusionMotor:
         self.output_dict["form"] = self.forme
         if self.state == "pos":
             self.state = "dollarN"
+        self.bool_print = True
 
     def pos_callback(self, agent, arg) -> None:
         self.pos = str(arg)
         print("pos_callback: agent=%r arg=%r" % (agent, arg))
         if self.state == "init":
             self.state = "pos"
+        self.bool_print = True
 
     def sra5_callback(self, agent, arg)-> None:
         # print("sra5_callback: agent=%r arg=%r" % (agent, arg))
@@ -68,7 +73,12 @@ class FusionMotor:
             self.state = "sra5"
         elif self.state == "dollarN":
             self.state = "color"
+        self.bool_print = True
     def mouse_callback(self,agen,arg)-> None:
+        print("mouse_callback: agent=%r arg=%r" % (agent, arg))
+        self.pos = int(arg)
+        self.state = "pos"
+        self.bool_print = True
         pass
 
     def sra5_processing(self, sra5_string) -> None:
@@ -76,25 +86,33 @@ class FusionMotor:
         self.sra5_token[0] = self.sra5_token[0].replace("Parsed=", "")
         if len(self.sra5_token) > 3:
             self.sra5_dict = {item.split('=')[0]: item.split('=')[1] for item in self.sra5_token}
-        print(self.sra5_dict)
+        self.bool_print = True
         
+
+
+
 
     def state_machine(self, arg=None) -> None:
         match self.state:
             case "init":
                 time.sleep(0.2)
-                print("cliquez sur processing a la position ou vous voulez votre forme")
+                if self.bool_print:
+                    print("cliquez sur processing a la position ou vous voulez votre forme")
+                    self.bool_print = False
             case "pos":
                 time.sleep(0.2)
-                print("déssiner une forme sur le DollarN ou énoncer le dessin")
+                if self.bool_print:
+                    print("déssiner une forme sur le DollarN ou énoncer le dessin")
+                    self.bool_print = False
             case "dollarN":
                 time.sleep(0.2)
-                print("énoncez la couleur de la forme")
+                if self.bool_print:
+                    print("énoncez la couleur de la forme")
+                    self.bool_print = False
             case "color":
                 self.output_dict["color"] = self.sra5_dict["color"]
                 time.sleep(0.2)
                 self.state = "end"
-                
             case "sra5":
                 self.output_dict = deepcopy(self.sra5_dict)
                 time.sleep(0.2)
@@ -107,16 +125,21 @@ class FusionMotor:
                 
         
 
+    def signal_handler(self, sig, frame):
+        print('You pressed Ctrl+C!')
+        self.running = False
+        sys.exit(0)
+
 if __name__ == "__main__":
     motor = FusionMotor()
 
-    while True:
+    signal.signal(signal.SIGINT, motor.signal_handler)
+    
+    while motor.running:
         motor.state_machine()
     
     
     
     
     
-    
-    
-    # ivyapi.IvyBindMsg(sra5_callback, "(.*)")
+
