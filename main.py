@@ -7,36 +7,46 @@ import fusion_engine
 import sys
 import pygame
 from pygame import Rect,Surface
-import os
+from forme import Forme
 #ivyapi.IvyInit("interface")
 #ivyapi.IvyStart()
 #os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ''' Interface multimodale'''
 
-liste_forme = list()
+def sum_tuple(t1,t2):
+    return tuple(map(sum,(zip(t1,t2))))
 
+liste_forme = list()
+id_forme = 0
 # fonction qui dessine les formes a l'écran 
-def dessiner_forme(fenetre,forme,liste_forme,coord=(210,180), couleur =(255,0,0) ):
+def dessiner_forme(fenetre,nom_forme,liste_forme,coord=(210,180), couleur =(255,0,0) ):
     rect = Rect(coord,(180,200))
-    
-    match forme:
+    global id_forme
+    match nom_forme:
         case 'RECTANGLE':
             r = pygame.draw.rect(fenetre,couleur,rect)
+            f = Forme( id_forme,nom_forme,couleur,coord)
             print(f"{r}") # <rect(210, 180, 180, 200)>
-            #liste_forme.append()
+            liste_forme.append(f)
             #liste_forme.add(pygame.draw.circle(fenetre,(0,255,0),))
+            id_forme += 1
         case 'CIRCLE':
-            pygame.draw.circle(fenetre,(0,255,0),1.5)
-            #liste_forme.append() 
-            pass
+            pygame.draw.circle(fenetre,(0,255,0),coord,20.0)
+            f = Forme(id_forme,nom_forme,couleur,20.5)
+            liste_forme.append(f)
+            id_forme += 1
         case 'DIAMOND':
-            diamond_points = [coord + (50,0),coord + (-50,0), coord + (0,-50),coord + (0,50)] # coord sommet haut,bas,gauche,droite
-            pygame.draw.circle(fenetre,couleur,diamond_points)
-            pass
+            diamond_points = [sum_tuple(coord,(50,0)),sum_tuple(coord,(-50,0)), sum_tuple(coord,(0,-50)), sum_tuple(coord,(0,50))] # coord sommet haut,bas,gauche,droite
+            pygame.draw.polygon(fenetre,couleur,diamond_points)
+            f = Forme(id_forme,nom_forme,couleur,coord)
+            liste_forme.append(f)
+            id_forme += 1
         case 'TRIANGLE':
-            triangle_points = [coord + (50,0), coord + (-50,-50),coord + (-50,50)] # coord sommet haut,gauche,droite 
-            liste_forme.append(pygame.draw.polygon(fenetre,couleur,triangle_points))
-            pass
+            triangle_points = [sum_tuple(coord,(50,0)), sum_tuple(coord,(-50,-50)), sum_tuple(coord,(-50,50))] # coord sommet haut,gauche,droite 
+            pygame.draw.polygon(fenetre,couleur,triangle_points)
+            f = Forme(id_forme,nom_forme,couleur,coord)
+            liste_forme.append(f)
+            id_forme += 1
         case _:
             pass
 def effacer_forme(forme,coord):
@@ -47,7 +57,7 @@ def effacer_forme(forme,coord):
     
 def redraw_form_list():
     for f in liste_forme:
-        pygame.draw(f)
+        dessiner_forme
 
 def main():
     pygame.init()
@@ -74,7 +84,7 @@ def main():
         action = ""
         if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
             score = float( motor.sra5_dict['Confidence'].replace(',','.'))
-            if score > 0.6:
+            if score > 0.6 : # tous les champs doivent être remplis
 
                 #print(float(score))
                 #print(f"{motor.sra5_dict}")
