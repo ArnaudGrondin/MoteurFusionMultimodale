@@ -13,8 +13,8 @@ class FusionMotor:
         #     ivyapi.IvyStop()
         # except Exception as e:
         #     print(f"IvyStop a échoué : {e}")
-        #ivyapi.IvyInit("fusion_engine", "hi", 0, self.on_connection_change)
-        #ivyapi.IvyStart()
+        ivyapi.IvyInit("fusion_engine", "hi", 0, self.on_connection_change)
+        ivyapi.IvyStart()
         ivyapi.IvyBindMsg(self.dollarN_callback, "^dollarN: (.*)")
         ivyapi.IvyBindMsg(self.sra5_callback, "^sra5 (.*)")
         ivyapi.IvyBindMsg(self.pos_callback, "^pos: (.*)")
@@ -78,7 +78,7 @@ class FusionMotor:
         elif self.state == "dollarN":
             self.state = "color"
         self.bool_print = True
-    def mouse_callback(self,agen,arg)-> None:
+    def mouse_callback(self,agent,arg)-> None:
         print("mouse_callback: agent=%r arg=%r" % (agent, arg))
         self.pos = int(arg)
         self.state = "pos"

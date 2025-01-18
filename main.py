@@ -12,19 +12,8 @@ import os
 #ivyapi.IvyStart()
 #os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ''' Interface multimodale'''
-# class interface():
 
-#     self.root = Tk()
-
-#     def __init__():
-#         tk.Frame.__init__(self, master)
-#         self.grid(padding="3 3 12 12")                 
-#         self.size()      
-#         self.createWidgets()
-
-#     def createWidgets(self):
-#         self.quitButton = tk.Button(self, text='Quit',command=self.quit)            
-#         self.quitButton.grid()    
+liste_forme = list()
 
 # fonction qui dessine les formes a l'écran 
 def dessiner_forme(fenetre,forme,liste_forme,coord=(210,180), couleur =(255,0,0) ):
@@ -32,17 +21,21 @@ def dessiner_forme(fenetre,forme,liste_forme,coord=(210,180), couleur =(255,0,0)
     
     match forme:
         case 'RECTANGLE':
-            liste_forme.add(pygame.draw.rect(fenetre,couleur,rect))
+            r = pygame.draw.rect(fenetre,couleur,rect)
+            print(f"{r}") # <rect(210, 180, 180, 200)>
+            #liste_forme.append()
             #liste_forme.add(pygame.draw.circle(fenetre,(0,255,0),))
         case 'CIRCLE':
-            #pygame.draw.circle(fenetre,(0,255,0),)
-            liste_forme.add(pygame.draw.circle(fenetre,(0,255,0),))
+            pygame.draw.circle(fenetre,(0,255,0),1.5)
+            #liste_forme.append() 
             pass
         case 'DIAMOND':
+            diamond_points = [coord + (50,0),coord + (-50,0), coord + (0,-50),coord + (0,50)] # coord sommet haut,bas,gauche,droite
+            pygame.draw.circle(fenetre,couleur,diamond_points)
             pass
         case 'TRIANGLE':
-            triangle_points = [coord + (50,0), coord + (-50,-50),coord + (-50,+50)] # coord sommet haut,gauche,droite 
-            liste_forme.add(pygame.draw.polygon(fenetre,couleur,triangle_points))
+            triangle_points = [coord + (50,0), coord + (-50,-50),coord + (-50,50)] # coord sommet haut,gauche,droite 
+            liste_forme.append(pygame.draw.polygon(fenetre,couleur,triangle_points))
             pass
         case _:
             pass
@@ -52,6 +45,9 @@ def effacer_forme(forme,coord):
     # vérifier que la forme a supprimé correspond à ce qui est dit a l'oral 
     pass
     
+def redraw_form_list():
+    for f in liste_forme:
+        pygame.draw(f)
 
 def main():
     pygame.init()
@@ -62,9 +58,11 @@ def main():
     motor = fusion_engine.FusionMotor()
     font = pygame.font.SysFont(None, 32)
     fenetre.fill("white")
-    liste_forme = list()
+    
     coord_mouse = (0,0)
+
     while running:
+        dt = clock.tick(60) #/ 1000 #limite les fps a 60
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -79,7 +77,7 @@ def main():
             if score > 0.6:
 
                 #print(float(score))
-                print(f"{motor.sra5_dict}")
+                #print(f"{motor.sra5_dict}")
                 liste_cmd.append(motor.sra5_dict) # on veut un historique des commandes
                 action = motor.sra5_dict['action']
                 match action:
@@ -88,6 +86,7 @@ def main():
                     case 'MOVE':
                         pass
                     case 'DELETE':
+                        fenetre.fill("white")
                         pass
                     case 'QUIT':
                         pass 
@@ -99,9 +98,10 @@ def main():
         #print("String " + motor.sra5_string)
         text_surface = font.render(action, True, (255, 255, 255), (0, 0, 0))
         # rend les informations graphiques à l'écran 
+
         fenetre.blit(text_surface, (20, 20))
+        pygame.display.flip()
         
-        dt = clock.tick(10) / 1000 #limite les fps a 60
         
     # Gestion des événements
     # ...
