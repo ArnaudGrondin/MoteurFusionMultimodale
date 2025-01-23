@@ -125,8 +125,6 @@ def main():
             score = float(fusion['Confidence'].replace(',','.'))
             if score > 0.6 : # tous les champs doivent être remplis
                 
-            #print(float(score))
-            #print(f"{motor.sra5_dict}")
             
             
             

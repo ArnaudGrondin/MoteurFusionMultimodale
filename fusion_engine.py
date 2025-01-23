@@ -78,13 +78,13 @@ class FusionMotor:
         elif self.state == "dollarN":
             self.state = "color"
         self.bool_print = True
+
     def mouse_callback(self,agent,arg)-> None:
         print("mouse_callback: agent=%r arg=%r" % (agent, arg))
         self.pos = str(arg)
         if self.state == "init":
             self.state = "pos"
         self.bool_print = True
-        
 
     def sra5_processing(self, sra5_string) -> None:
         self.sra5_token = sra5_string.split(" ")
@@ -100,34 +100,35 @@ class FusionMotor:
     def state_machine(self, arg=None) -> None:
         match self.state:
             case "init":
-                time.sleep(0.5)
                 if self.bool_print:
                     print("cliquez sur processing a la position ou vous voulez votre forme")
                     self.bool_print = False
+                time.sleep(1)
             case "pos":
-                time.sleep(0.5)
                 if self.bool_print:
                     print("déssiner une forme sur le DollarN ou énoncer le dessin")
                     self.bool_print = False
+                time.sleep(1)
             case "dollarN":
-                time.sleep(0.5)
                 if self.bool_print:
                     print("énoncez la couleur de la forme")
                     self.output_dict["action"] = "CREATE"
                     self.bool_print = False
+                time.sleep(1)
             case "color":
                 self.output_dict["color"] = self.sra5_dict["color"]
-                time.sleep(0.5)
                 self.state = "end"
+                time.sleep(1)
             case "sra5":
                 self.output_dict = deepcopy(self.sra5_dict)
-                time.sleep(0.5)
                 self.state = "end"
+                time.sleep(1)
             case "end":
                 ivyapi.IvySendMsg("fusion_engine: " + str(self.output_dict))
                 self.state = "init"
+                time.sleep(1)
             case _:
-                time.sleep(0.5)
+                time.sleep(1)
 
 
     def signal_handler(self, sig, frame):
