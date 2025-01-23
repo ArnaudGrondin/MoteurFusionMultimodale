@@ -27,12 +27,13 @@ def fusion_engine_callback(agent,arg)-> None:
 
 ivyapi.IvyBindMsg(fusion_engine_callback,"^fusion_engine: (.*)")
 
-liste_forme = list()
+liste_forme = []
 id_forme = 0
 # fonction qui dessine les formes a l'écran 
-def dessiner_forme(fenetre,nom_forme,liste_forme,coord=(210,180), couleur =(255,0,0) ):
+def dessiner_forme(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
     rect = Rect(coord,(180,200))
     global id_forme
+    global liste_forme
     match nom_forme:
         case 'RECTANGLE':
             r = pygame.draw.rect(fenetre,couleur,rect)
@@ -68,7 +69,7 @@ def effacer_forme(forme,coord):
     
 def redraw_form_list():
     for f in liste_forme:
-        dessiner_forme
+        pass
 
 def main():
     pygame.init()
@@ -82,7 +83,7 @@ def main():
     
     
     coord_mouse = (0,0)
-
+    global liste_forme
     while running:
         dt = clock.tick(60) #/ 1000 #limite les fps a 60
         for event in pygame.event.get():
@@ -95,10 +96,10 @@ def main():
                 
         action = ""
         # if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
-        if fusion is not None:
+        if fusion != None:
             score = float( fusion['Confidence'].replace(',','.'))
             if score > 0.6 : # tous les champs doivent être remplis
-
+                
             #print(float(score))
             #print(f"{motor.sra5_dict}")
             
@@ -106,10 +107,12 @@ def main():
             
             
             # liste_cmd.append(motor.sra5_dict) # on veut un historique des commandes
+        
                 action = fusion['action']
+                forme = fusion['form']
                 match action:
                     case 'CREATE':
-                        dessiner_forme(fenetre,motor.sra5_dict['form'],liste_forme)
+                        dessiner_forme(fenetre,forme)
                     case 'MOVE':
                         pass
                     case 'DELETE':
