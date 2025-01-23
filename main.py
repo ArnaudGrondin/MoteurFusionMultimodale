@@ -95,7 +95,7 @@ def main():
                 
         action = ""
         # if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
-        if fusion != None:
+        if fusion is not None:
             score = float( fusion['Confidence'].replace(',','.'))
             if score > 0.6 : # tous les champs doivent être remplis
 
