@@ -7,6 +7,7 @@ class Forme:
         self.id = id
         self.nom_forme = nom_forme
         self.couleur = couleur
-        self.couleur = coords
-        
+        self.coord = coords
+
+
         

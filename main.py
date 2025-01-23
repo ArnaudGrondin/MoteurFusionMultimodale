@@ -44,7 +44,7 @@ def draw_form(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
             id_forme += 1
         case 'CIRCLE':
             pygame.draw.circle(fenetre,(0,255,0),coord,20.0)
-            f = Forme(id_forme,nom_forme,couleur,20.5)
+            f = Forme(id_forme,nom_forme,couleur,coord)
             liste_forme.append(f)
             id_forme += 1
         case 'DIAMOND':
@@ -92,9 +92,26 @@ def move_form(coord_mouse):
             coord2 = pygame.mouse.get_pos()
         forme_to_move.coord = coord2
 
-def redraw_form_list():
-    for f in liste_forme:
-        pass
+def redraw_form_list(fenetre):
+    for forme in liste_forme:
+        match forme.nom_forme:
+            case 'RECTANGLE':
+                rect = Rect(forme.coord, (180, 200))
+                pygame.draw.rect(fenetre, forme.couleur, rect)
+            case 'CIRCLE':
+                pygame.draw.circle(fenetre, forme.couleur, forme.coord, 20)
+            case 'DIAMOND':
+                diamond_points = [
+                    sum_tuple(forme.coord, (50, 0)), sum_tuple(forme.coord, (-50, 0)),
+                    sum_tuple(forme.coord, (0, -50)), sum_tuple(forme.coord, (0, 50))
+                ]
+                pygame.draw.polygon(fenetre, forme.couleur, diamond_points)
+            case 'TRIANGLE':
+                triangle_points = [
+                    sum_tuple(forme.coord, (50, 0)), sum_tuple(forme.coord, (-50, -50)),
+                    sum_tuple(forme.coord, (-50, 50))
+                ]
+                pygame.draw.polygon(fenetre, forme.couleur, triangle_points)
 
 def main():
     pygame.init()
@@ -148,10 +165,10 @@ def main():
             
         #print("yes " + text )
 
-
+        redraw_form_list(fenetre)
         text_surface = font.render(action, True, (255, 255, 255), (0, 0, 0))
         # rend les informations graphiques à l'écran 
-
+        
         fenetre.blit(text_surface, (20, 20))
         pygame.display.flip()
         
