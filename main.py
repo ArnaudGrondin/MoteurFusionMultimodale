@@ -3,18 +3,29 @@
 #import tkinter as tk
 import ivy.std_api as ivyapi
 import simple
-import fusion_engine
+import time
+import ast
 import sys
 import pygame
 from pygame import Rect,Surface
 from forme import Forme
-#ivyapi.IvyInit("interface")
-#ivyapi.IvyStart()
+import threading
+ivyapi.IvyInit("interface", "hi", 0)
+ivyapi.IvyStart()
 #os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ''' Interface multimodale'''
 
+
+fusion= None
 def sum_tuple(t1,t2):
     return tuple(map(sum,(zip(t1,t2))))
+
+
+def fusion_engine_callback(agent,arg)-> None:
+    global fusion
+    fusion = ast.literal_eval(arg)
+
+ivyapi.IvyBindMsg(fusion_engine_callback,"^fusion_engine: (.*)")
 
 liste_forme = list()
 id_forme = 0
@@ -65,9 +76,10 @@ def main():
     fenetre = pygame.display.set_mode((800, 600))
     running = True
     clock = pygame.time.Clock()
-    motor = fusion_engine.FusionMotor()
+    # motor = fusion_engine.FusionMotor()
     font = pygame.font.SysFont(None, 32)
     fenetre.fill("white")
+    
     
     coord_mouse = (0,0)
 
@@ -79,17 +91,22 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 coord_mouse = pygame.mouse.get_pos() # A enlever si IVY marche
                 ivyapi.IvySendMsg("mouse: "+str(coord_mouse))
+                print(coord_mouse)
                 
-                pass
         action = ""
-        if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
-            score = float( motor.sra5_dict['Confidence'].replace(',','.'))
+        # if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
+        if fusion != None:
+            score = float( fusion['Confidence'].replace(',','.'))
             if score > 0.6 : # tous les champs doivent être remplis
 
-                #print(float(score))
-                #print(f"{motor.sra5_dict}")
-                liste_cmd.append(motor.sra5_dict) # on veut un historique des commandes
-                action = motor.sra5_dict['action']
+            #print(float(score))
+            #print(f"{motor.sra5_dict}")
+            
+            
+            
+            
+            # liste_cmd.append(motor.sra5_dict) # on veut un historique des commandes
+                action = fusion['action']
                 match action:
                     case 'CREATE':
                         dessiner_forme(fenetre,motor.sra5_dict['form'],liste_forme)
@@ -101,11 +118,10 @@ def main():
                     case 'QUIT':
                         pass 
                 pygame.display.flip()
-                
-            #print("yes " + text )
+            
+        #print("yes " + text )
 
-        # print("Token " + str(len(motor.sra5_token)) )
-        #print("String " + motor.sra5_string)
+
         text_surface = font.render(action, True, (255, 255, 255), (0, 0, 0))
         # rend les informations graphiques à l'écran 
 
@@ -120,6 +136,7 @@ def main():
     
 
     # Fermeture de Pygame
+    time.sleep(0.1)
     pygame.quit()
     sys.exit()
     # app = interface()
