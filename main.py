@@ -30,7 +30,7 @@ ivyapi.IvyBindMsg(fusion_engine_callback,"^fusion_engine: (.*)")
 liste_forme = []
 id_forme = 0
 # fonction qui dessine les formes a l'écran 
-def dessiner_forme(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
+def draw_form(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
     rect = Rect(coord,(180,200))
     global id_forme
     global liste_forme
@@ -61,7 +61,7 @@ def dessiner_forme(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
             id_forme += 1
         case _:
             pass
-def effacer_forme(forme,coord_mouse):
+def remove_form(coord_mouse):
     min_dist = float('inf')
     forme_to_delete = None
     for f in liste_forme:
@@ -73,7 +73,7 @@ def effacer_forme(forme,coord_mouse):
         liste_forme.remove(forme_to_delete)
     # vérifier que la forme a supprimé correspond à ce qui est dit a l'oral 
     pass
-    
+
 def redraw_form_list():
     for f in liste_forme:
         pass
@@ -119,11 +119,11 @@ def main():
                 forme = fusion['form']
                 match action:
                     case 'CREATE':
-                        dessiner_forme(fenetre,forme)
+                        draw_form(fenetre,forme)
                     case 'MOVE':
                         pass
                     case 'DELETE':
-                        effacer_forme(forme,coord_mouse)        
+                        remove_form(coord_mouse)        
                     case 'QUIT':
                         pass 
                 pygame.display.flip()
