@@ -61,9 +61,16 @@ def dessiner_forme(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
             id_forme += 1
         case _:
             pass
-def effacer_forme(forme,coord):
-    #cherchez avec pygame s'il y a une forme aux coordonées spécifiées
-
+def effacer_forme(forme,coord_mouse):
+    min_dist = float('inf')
+    forme_to_delete = None
+    for f in liste_forme:
+        dist = ((f.coord[0] - coord_mouse[0])**2 + (f.coord[1] - coord_mouse[1])**2)**0.5
+        if dist < min_dist:
+            min_dist = dist
+            forme_to_delete = f
+    if forme_to_delete is not None:
+        liste_forme.remove(forme_to_delete)
     # vérifier que la forme a supprimé correspond à ce qui est dit a l'oral 
     pass
     
@@ -116,8 +123,7 @@ def main():
                     case 'MOVE':
                         pass
                     case 'DELETE':
-                        fenetre.fill("white")
-                        pass
+                        effacer_forme(forme,coord_mouse)        
                     case 'QUIT':
                         pass 
                 pygame.display.flip()
