@@ -61,6 +61,7 @@ def draw_form(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
             id_forme += 1
         case _:
             pass
+
 def remove_form(coord_mouse):
     min_dist = float('inf')
     forme_to_delete = None
@@ -72,7 +73,24 @@ def remove_form(coord_mouse):
     if forme_to_delete is not None:
         liste_forme.remove(forme_to_delete)
     # vérifier que la forme a supprimé correspond à ce qui est dit a l'oral 
-    pass
+
+def move_form(coord_mouse):
+    coord2 = None
+    min_dist = float("inf")
+    forme_to_move = None
+    for f in liste_forme:
+        dist = (
+            (f.coord[0] - coord_mouse[0]) ** 2 + (f.coord[1] - coord_mouse[1]) ** 2
+        ) ** 0.5
+        if dist < min_dist:
+            min_dist = dist
+            forme_to_move = f
+    if forme_to_move is not None:
+        print("choisissez la nouvelle position")
+        while coord2 is None:
+            pygame.event.get()
+            coord2 = pygame.mouse.get_pos()
+        forme_to_move.coord = coord2
 
 def redraw_form_list():
     for f in liste_forme:
@@ -103,8 +121,8 @@ def main():
                 
         action = ""
         # if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
-        if fusion != None:
-            score = float( fusion['Confidence'].replace(',','.'))
+        if fusion is not None:
+            score = float(fusion['Confidence'].replace(',','.'))
             if score > 0.6 : # tous les champs doivent être remplis
                 
             #print(float(score))
@@ -121,7 +139,7 @@ def main():
                     case 'CREATE':
                         draw_form(fenetre,forme)
                     case 'MOVE':
-                        pass
+                        move_form(coord_mouse)
                     case 'DELETE':
                         remove_form(coord_mouse)        
                     case 'QUIT':
