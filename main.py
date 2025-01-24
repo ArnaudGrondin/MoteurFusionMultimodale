@@ -94,11 +94,15 @@ def move_form(coord_mouse):
             min_dist = dist
             forme_to_move = f
     if forme_to_move is not None:
+        liste_forme.remove(forme_to_move)
         print("choisissez la nouvelle position")
         while coord2 is None:
-            pygame.event.get()
-            coord2 = pygame.mouse.get_pos()
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    coord2 = event.pos
         forme_to_move.coord = coord2
+        liste_forme.append(forme_to_move)
+        coord2 = None
 
 def redraw_form_list(fenetre):
     for forme in liste_forme:
@@ -130,7 +134,7 @@ def main():
     # motor = fusion_engine.FusionMotor()
     font = pygame.font.SysFont(None, 32)
     fenetre.fill("white")
-    
+    global fusion
     
     coord_mouse = (0,0)
     global liste_forme
@@ -155,8 +159,6 @@ def main():
             
             
             # liste_cmd.append(motor.sra5_dict) # on veut un historique des commandes
-        
-                couleur = None
                 action = fusion['action']
                 forme = fusion['form']
                 coord = coord_mouse
@@ -166,14 +168,18 @@ def main():
                 
                 match action:
                     case 'CREATE':
-                        draw_form(fenetre,forme)
-                        draw_form(fenetre,forme,coord,couleur)
+                        draw_form(fenetre,forme, coord_mouse)
+                        time.sleep(1)
                     case 'MOVE':
                         move_form(coord_mouse)
+                        time.sleep(1)
                     case 'DELETE':
-                        remove_form(coord_mouse)        
+                        remove_form(coord_mouse)
+                        time.sleep(1)      
                     case 'QUIT':
-                        pass 
+                        pass
+                    case _:
+                        pass
                 pygame.display.flip()
             
         #print("yes " + text )
@@ -185,7 +191,7 @@ def main():
         
         fenetre.blit(text_surface, (20, 20))
         pygame.display.flip()
-        
+        fusion = None
         
     # Gestion des événements
     # ...

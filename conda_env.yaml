@@ -1,4 +1,4 @@
-name: IHM_multi
+name: ihm
 channels:
   - defaults
   - conda-forge
