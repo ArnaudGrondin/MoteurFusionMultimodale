@@ -168,7 +168,7 @@ def main():
                 
                 match action:
                     case 'CREATE':
-                        draw_form(fenetre,forme, coord_mouse)
+                        draw_form(fenetre,forme, coord_mouse,couleur)
                         time.sleep(1)
                     case 'MOVE':
                         move_form(coord_mouse)
