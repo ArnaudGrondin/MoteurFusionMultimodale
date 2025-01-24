@@ -56,8 +56,10 @@ class FusionMotor:
         )
 
     def dollarN_callback(self, agent, arg) -> None:
-        self.forme = str(arg)
-        print("dollarN_callback: agent=%r arg=%r" % (agent, arg))
+        self.forme = str(arg).split(" ")[0]
+        confidence = str(arg).split(" ")[1]
+        self.output_dict["Confidence"] = confidence.replace(".",",").replace("(","").replace(")","")
+        print("dollarN_callback: agent=%r arg=%r" % (agent, self.forme))
         self.output_dict["form"] = self.forme
         if self.state == "pos":
             self.state = "dollarN"

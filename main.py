@@ -24,6 +24,7 @@ def sum_tuple(t1,t2):
 def fusion_engine_callback(agent,arg)-> None:
     global fusion
     fusion = ast.literal_eval(arg)
+    print("fusion_engine_callback: agent=%r arg=%r" % (agent, arg))
 
 ivyapi.IvyBindMsg(fusion_engine_callback,"^fusion_engine: (.*)")
 
@@ -150,7 +151,7 @@ def main():
                 
         action = ""
         # if len(motor.sra5_token) > 3 : #todo rajouter une condition sur le taux de confiance
-        if fusion is not None:
+        if fusion is not None and fusion["Confidence"] != "undefined":
             score = float(fusion['Confidence'].replace(',','.'))
             if score > 0.6 : # tous les champs doivent être remplis
                 
