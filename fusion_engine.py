@@ -95,8 +95,6 @@ class FusionMotor:
         
 
 
-
-
     def state_machine(self, arg=None) -> None:
         match self.state:
             case "init":
