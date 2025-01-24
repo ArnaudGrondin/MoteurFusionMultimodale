@@ -29,6 +29,14 @@ ivyapi.IvyBindMsg(fusion_engine_callback,"^fusion_engine: (.*)")
 
 liste_forme = []
 id_forme = 0
+def get_couleur(couleur):
+    match couleur:
+        case "RED":
+            return (255,0,0)
+        case "BLUE":
+            return (0,0,255)
+        case "GREEN":
+            return (0,255,0)
 # fonction qui dessine les formes a l'écran 
 def draw_form(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
     rect = Rect(coord,(180,200))
@@ -153,9 +161,14 @@ def main():
             # liste_cmd.append(motor.sra5_dict) # on veut un historique des commandes
                 action = fusion['action']
                 forme = fusion['form']
+                coord = coord_mouse
+                if len(fusion['color']) > 0 :
+                    couleur = fusion['color']
+                    couleur = get_couleur(couleur)
+                
                 match action:
                     case 'CREATE':
-                        draw_form(fenetre,forme, coord_mouse)
+                        draw_form(fenetre,forme, coord_mouse,couleur)
                         time.sleep(1)
                     case 'MOVE':
                         move_form(coord_mouse)
@@ -171,6 +184,7 @@ def main():
             
         #print("yes " + text )
 
+        fenetre.fill("white")
         redraw_form_list(fenetre)
         text_surface = font.render(action, True, (255, 255, 255), (0, 0, 0))
         # rend les informations graphiques à l'écran 
