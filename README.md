@@ -1,7 +1,7 @@
 # MoteurFusionMultimodale
 Application de fusion multimodale
 
-Fichier test des idées.
+
 
 
 TACHES DE BASE : 
@@ -10,26 +10,35 @@ TACHES DE BASE :
   
 TACHES SECONDAIRES :
 * Supprimer forme
-* Modifier couleur
-* Modifier forme
 
-FONCTIONNALITES SECONDAIRES : 
--Certain score - 60% demander à répeter la demande à la voix / forme
 
-Grammaire V1 : 
+## Description
+Ce projet est un moteur de fusion multimodale qui permet d'intégrer différentes sources de données pour une analyse approfondie.
 
-Formule + un + forme + [ici] ou [couleur] ou [de cete couleur]
+## Dépendances
+Pour installer les dépendances, utilisez le fichier `conda_env.yaml` fourni. Voici quelques-unes des dépendances principales :
 
-Formule: Créer, Fais, Faire...
+- `dollarn`
+- `pygame=2.6.1`
+- `python=3.12.7`
+- `numpy==2.1.3` (via `pip`)
 
-Forme : rectangle, cercle, triangle, losange, carré, parallepipède...
+## Installation
+Pour installer les dépendances, exécutez la commande suivante :
 
-Couleur : rouge, vert, bleu, orange, vert, jaune, noir...
+```bash
+conda env create -f conda_env.yaml
+```
 
-pour lancer l'application dans un terminal  tapez : 
+## Utilisation
+Pour utiliser le moteur, exécutez le script principal :
 
- .\sra5\sra5_on.bat
+```bash
+python main.py
+```
 
-dans un autre terminal tapez : 
+## Contributions
+Les contributions sont les bienvenues ! Veuillez soumettre une demande de tirage pour toute modification.
 
-python .\main.py
+## Licence
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.

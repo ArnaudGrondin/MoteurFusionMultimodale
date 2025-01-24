@@ -178,15 +178,14 @@ def main():
         fenetre.blit(text_surface, (20, 20))
         pygame.display.flip()
         fusion = None
-        
-    # Gestion des événements
-    # ...
+        fenetre.fill("white")
+    
+    
 
-    # Rafraîchissement de l'écran
+    
     
 
     # Fermeture de Pygame
-    time.sleep(0.1)
     pygame.quit()
     sys.exit()
     # app = interface()
