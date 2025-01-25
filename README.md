@@ -2,9 +2,6 @@
 
 Application de fusion multimodale
 
-
-
-
 TACHES DE BASE : 
 
 * Créer une forme
@@ -13,7 +10,6 @@ TACHES DE BASE :
 TACHES SECONDAIRES :
 
 * Supprimer forme
-
 
 ## Description
 
@@ -51,10 +47,6 @@ python main.py
 python fusion_engine.py
 .\sra5\sra5_on.bat
 ```
-
-## Contributions
-
-Les contributions sont les bienvenues ! Veuillez soumettre une demande de tirage pour toute modification.
 
 ## Licence
 
