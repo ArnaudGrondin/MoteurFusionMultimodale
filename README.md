@@ -21,7 +21,6 @@ couleurs possibles :
 * vert
 * bleu
 
-
 ## Description
 
 Ce projet est un moteur de fusion multimodale qui permet d'intégrer différentes sources de données pour une analyse approfondie.
@@ -67,6 +66,7 @@ Pour utiliser le moteur, exécutez le script principal :
 ```bash
 python main.py
 python fusion_engine.py
+python tkDollarN.py
 .\sra5\sra5_on.bat
 ```
 
