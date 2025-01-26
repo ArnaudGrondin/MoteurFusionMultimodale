@@ -40,6 +40,14 @@ def get_couleur(couleur):
             return (0,255,0)
 # fonction qui dessine les formes a l'écran 
 def draw_form(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
+    """Dessine une forme sur la fenetre
+
+    Args:
+        fenetre (_type_): fenetre pygame
+        nom_forme (_type_): nom de la forme
+        coord (_type_): coordonnees de la forme
+        couleur (_type_): couleur de la forme
+    """
     rect = Rect(coord,(180,200))
     global id_forme
     global liste_forme
@@ -72,6 +80,11 @@ def draw_form(fenetre,nom_forme,coord=(210,180), couleur =(255,0,0) ):
             pass
 
 def remove_form(coord_mouse):
+    """Supprime la forme la plus proche du dernier clique
+
+    Args:
+        coord_mouse (_type_): coordonnees de la souris
+    """
     min_dist = float('inf')
     forme_to_delete = None
     for f in liste_forme:
@@ -84,6 +97,12 @@ def remove_form(coord_mouse):
     # vérifier que la forme a supprimé correspond à ce qui est dit a l'oral 
 
 def move_form(coord_mouse):
+    """Deplace la forme la plus proche du dernier clique
+
+    Args:
+        coord_mouse (_type_): coordonnees de la souris
+    """
+    
     coord2 = None
     min_dist = float("inf")
     forme_to_move = None
@@ -106,6 +125,11 @@ def move_form(coord_mouse):
         coord2 = None
 
 def redraw_form_list(fenetre):
+    """Redessine la liste des formes sur la fenetre
+
+    Args:
+        fenetre (_type_): fenetre pygame
+    """
     for forme in liste_forme:
         match forme.nom_forme:
             case 'RECTANGLE':

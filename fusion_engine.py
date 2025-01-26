@@ -98,6 +98,12 @@ class FusionMotor:
 
 
     def state_machine(self, arg=None) -> None:
+        
+        """
+        State machine of the Fusion Engine
+        """
+        
+        
         match self.state:
             case "init":
                 if self.bool_print:
