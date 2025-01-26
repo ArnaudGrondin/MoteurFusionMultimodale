@@ -178,7 +178,7 @@ def main():
         if fusion is not None and fusion["Confidence"] != "undefined":
             score = float(fusion['Confidence'].replace(',','.'))
             if score > 0.6 : # tous les champs doivent être remplis
-                
+            
             
             
             

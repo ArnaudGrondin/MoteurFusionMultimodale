@@ -20,12 +20,22 @@ couleurs possibles :
 * rouge
 * vert
 * bleu
-* jaune
-* orange
+
 
 ## Description
 
 Ce projet est un moteur de fusion multimodale qui permet d'intégrer différentes sources de données pour une analyse approfondie.
+Le moteur utilise plusieurs sources de données :
+
+* DollarN
+* SRA5
+* canvas pygame
+
+Pour dessiner une forme, le moteur demande en premier la position de la souris.
+Le moteur demande ensuite la forme à dessiner. il y a deux options :
+
+* tracer une forme sur dollarN puis énoncer la couleur sur sra5.
+* énoncer la forme + la couleur sur sra5.
 
 ## Dépendances
 
